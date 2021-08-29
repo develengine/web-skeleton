@@ -127,7 +127,22 @@ function play_noise()
     source.start();
 }
 
+
 var is_played = false;
+
+var map = [
+    "           ",
+    "          #",
+    "          #",
+    "  #      # ",
+    "       #   ",
+    "####  #####"
+];
+
+var map_width = map[0].length;
+var map_height = map.length;
+var tile_size = 64;
+
 
 function loop()
 {
@@ -135,14 +150,21 @@ function loop()
     var delta_time = timing();
 
     if (key_states['p'] && !is_played) {
-        // play_sound("rap.ogg");
-        play_noise();
+        play_sound("rap.ogg");
+        // play_noise();
         is_played = true;
     } else if (!key_states['p'] && is_played) {
         is_played = false;
     }
 
-    ctx.drawImage(images["obama.png"], 0, 0, 640, 360);
+    var tile = images["obama.png"];
+    for (var y = 0; y < map_height; y++) {
+        for (var x = 0; x < map_width; x++) {
+            if (map[y][x] == '#') {
+                ctx.drawImage(tile, x * tile_size, y * tile_size, tile_size, tile_size);
+            }
+        }
+    }
 }
 
 function main()
